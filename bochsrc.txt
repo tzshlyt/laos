@@ -26,3 +26,8 @@ ata0: enabled=1, ioaddr1=0x1f0, ioaddr2=0x3f0, irq=14
 #gdbstub: enabled=1, port=1234, text_base=0, data_base=0, bss_base=0
 
 ata0-master: type=disk, path="hd10m.img", mode=flat
+
+# 设置
+#floppya: 1_44=os-image, status=inserted
+
+#boot: a

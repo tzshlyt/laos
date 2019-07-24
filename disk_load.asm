@@ -7,8 +7,8 @@ disk_load:
 	mov ah, 0x02 	; read disk function
 	mov al, dh 	; read dh sectiors
 	mov ch, 0x00 	; cylinder 0
-	mov dh, 0x00 	; head number
-	mov cl, 0x02 	; start reading 2nd sector, 0x01 is our boot sector 
+	mov dh, 0x00 	; head number (0x0 .. 0xF)
+	mov cl, 0x02 	; start reading 2nd sector, 0x01 is our boot sector, 0x02 is the first 'available' sector
 
 	int 0x13
 
