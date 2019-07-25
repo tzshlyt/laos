@@ -33,39 +33,39 @@
 00000000000i[      ]   Sound support: no
 00000000000i[      ]   USB support: UHCI
 00000000000i[      ]   VGA extension support: vbe cirrus
-00000000000i[MEM0  ] allocated memory at 0x112901000. after alignment, vector=0x112901000
+00000000000i[MEM0  ] allocated memory at 0x1155c6000. after alignment, vector=0x1155c6000
 00000000000i[MEM0  ] 32.00MB
 00000000000i[MEM0  ] mem block size = 0x00020000, blocks=256
 00000000000i[MEM0  ] rom at 0xfffe0000/131072 ('/usr/local/Cellar/bochs/2.6.9_2/share/bochs/BIOS-bochs-latest')
-00000000000i[      ] lt_dlhandle is 0x7fb24d55e000
+00000000000i[      ] lt_dlhandle is 0x7f97675e6550
 00000000000i[PLUGIN] loaded plugin libbx_hdimage.so
-00000000000i[      ] lt_dlhandle is 0x7fb24f825ed0
+00000000000i[      ] lt_dlhandle is 0x7f976980dbc0
 00000000000i[PLUGIN] loaded plugin libbx_pci.so
-00000000000i[      ] lt_dlhandle is 0x7fb24d6a6c00
+00000000000i[      ] lt_dlhandle is 0x7f97676178d0
 00000000000i[PLUGIN] loaded plugin libbx_pci2isa.so
-00000000000i[      ] lt_dlhandle is 0x7fb24d6a6cb0
+00000000000i[      ] lt_dlhandle is 0x7f976747be70
 00000000000i[PLUGIN] loaded plugin libbx_usb_uhci.so
-00000000000i[      ] lt_dlhandle is 0x7fb24d6a8ea0
+00000000000i[      ] lt_dlhandle is 0x7f9767619700
 00000000000i[PLUGIN] loaded plugin libbx_acpi.so
-00000000000i[      ] lt_dlhandle is 0x7fb24f8264d0
+00000000000i[      ] lt_dlhandle is 0x7f976747c370
 00000000000i[PLUGIN] loaded plugin libbx_cmos.so
-00000000000i[      ] lt_dlhandle is 0x7fb24f826560
+00000000000i[      ] lt_dlhandle is 0x7f9767619bd0
 00000000000i[PLUGIN] loaded plugin libbx_dma.so
-00000000000i[      ] lt_dlhandle is 0x7fb24f826f40
+00000000000i[      ] lt_dlhandle is 0x7f976761a680
 00000000000i[PLUGIN] loaded plugin libbx_pic.so
-00000000000i[      ] lt_dlhandle is 0x7fb24f827550
+00000000000i[      ] lt_dlhandle is 0x7f976761ab90
 00000000000i[PLUGIN] loaded plugin libbx_pit.so
-00000000000i[      ] lt_dlhandle is 0x7fb24f827900
+00000000000i[      ] lt_dlhandle is 0x7f976980e0e0
 00000000000i[PLUGIN] loaded plugin libbx_vga.so
-00000000000i[      ] lt_dlhandle is 0x7fb24f827c70
+00000000000i[      ] lt_dlhandle is 0x7f976980e460
 00000000000i[PLUGIN] loaded plugin libbx_floppy.so
-00000000000i[      ] lt_dlhandle is 0x7fb24f828390
+00000000000i[      ] lt_dlhandle is 0x7f976980eb80
 00000000000i[PLUGIN] loaded plugin libbx_ioapic.so
-00000000000i[      ] lt_dlhandle is 0x7fb24f828800
+00000000000i[      ] lt_dlhandle is 0x7f976980eff0
 00000000000i[PLUGIN] loaded plugin libbx_keyboard.so
-00000000000i[      ] lt_dlhandle is 0x7fb24d6a9e60
+00000000000i[      ] lt_dlhandle is 0x7f976747cdf0
 00000000000i[PLUGIN] loaded plugin libbx_harddrv.so
-00000000000i[      ] lt_dlhandle is 0x7fb24d6aa230
+00000000000i[      ] lt_dlhandle is 0x7f976980f390
 00000000000i[PLUGIN] loaded plugin libbx_pci_ide.so
 00000000000i[PLUGIN] init_dev of 'pci' plugin device by virtual method
 00000000000i[DEV   ] i440FX PMC present at device 0, function 0
@@ -73,7 +73,7 @@
 00000000000i[DEV   ] PIIX3 PCI-to-ISA bridge present at device 1, function 0
 00000000000i[PLUGIN] init_dev of 'cmos' plugin device by virtual method
 00000000000i[CMOS  ] Using local time for initial clock
-00000000000i[CMOS  ] Setting initial clock to: Thu Jul 25 00:22:52 2019 (time0=1563985372)
+00000000000i[CMOS  ] Setting initial clock to: Thu Jul 25 09:43:17 2019 (time0=1564018997)
 00000000000i[PLUGIN] init_dev of 'dma' plugin device by virtual method
 00000000000i[DMA   ] channel 4 used by cascade
 00000000000i[PLUGIN] init_dev of 'pic' plugin device by virtual method
@@ -86,7 +86,8 @@
 00000000000i[MEM0  ] rom at 0xc0000/41472 ('/usr/local/Cellar/bochs/2.6.9_2/share/bochs/VGABIOS-lgpl-latest')
 00000000000i[PLUGIN] init_dev of 'floppy' plugin device by virtual method
 00000000000i[DMA   ] channel 2 used by Floppy Drive
-00000000000i[FLOPPY] Using boot sequence disk, none, none
+00000000000i[FLOPPY] fd0: 'os-image' ro=0, h=2,t=80,spt=18
+00000000000i[FLOPPY] Using boot sequence floppy, none, none
 00000000000i[FLOPPY] Floppy boot signature check is enabled
 00000000000i[PLUGIN] init_dev of 'acpi' plugin device by virtual method
 00000000000i[DEV   ] ACPI Controller present at device 1, function 3
@@ -97,11 +98,6 @@
 00000000000i[PLUGIN] init_dev of 'keyboard' plugin device by virtual method
 00000000000i[KBD   ] will paste characters every 400 keyboard ticks
 00000000000i[PLUGIN] init_dev of 'harddrv' plugin device by virtual method
-00000000000i[HD    ] HD on ata0-0: 'hd10m.img', 'flat' mode
-00000000000i[IMG   ] hd_size: 10322944
-00000000000i[HD    ] ata0-0: autodetect geometry: CHS=20/16/63
-00000000000i[HD    ] ata0-0: extra data outside of CHS address range
-00000000000i[HD    ] translation on ata0-0 set to 'none'
 00000000000i[PLUGIN] init_dev of 'pci_ide' plugin device by virtual method
 00000000000i[DEV   ] PIIX3 PCI IDE controller present at device 1, function 1
 00000000000i[PLUGIN] init_dev of 'unmapped' plugin device by virtual method
@@ -223,26 +219,29 @@
 00001531559i[BXVGA ] VBE known Display Interface b0c0
 00001531591i[BXVGA ] VBE known Display Interface b0c5
 00001534516i[VBIOS ] VBE Bios $Id: vbe.c,v 1.65 2014/07/08 18:02:25 vruppert Exp $
-00001878807i[BIOS  ] ata0-0: PCHS=20/16/63 translation=none LCHS=20/16/63
-00005325869i[BIOS  ] IDE time out
-00017404770i[BIOS  ] Booting from 0000:7c00
-03678568000p[SDL2  ] >>PANIC<< POWER button turned off.
-03678568000i[CPU0  ] CPU is in protected mode (active)
-03678568000i[CPU0  ] CS.mode = 32 bit
-03678568000i[CPU0  ] SS.mode = 32 bit
-03678568000i[CPU0  ] EFER   = 0x00000000
-03678568000i[CPU0  ] | EAX=000b8000  EBX=00007d74  ECX=00090000  EDX=00000580
-03678568000i[CPU0  ] | ESP=0008fff8  EBP=00090000  ESI=000e0000  EDI=0000ffac
-03678568000i[CPU0  ] | IOPL=0 id vip vif ac vm rf nt of df if tf sf zf af pf cf
-03678568000i[CPU0  ] | SEG sltr(index|ti|rpl)     base    limit G D
-03678568000i[CPU0  ] |  CS:0008( 0001| 0|  0) 00000000 ffffffff 1 1
-03678568000i[CPU0  ] |  DS:0010( 0002| 0|  0) 00000000 ffffffff 1 1
-03678568000i[CPU0  ] |  SS:0010( 0002| 0|  0) 00000000 ffffffff 1 1
-03678568000i[CPU0  ] |  ES:0010( 0002| 0|  0) 00000000 ffffffff 1 1
-03678568000i[CPU0  ] |  FS:0010( 0002| 0|  0) 00000000 ffffffff 1 1
-03678568000i[CPU0  ] |  GS:0010( 0002| 0|  0) 00000000 ffffffff 1 1
-03678568000i[CPU0  ] | EIP=00001005 (00001005)
-03678568000i[CPU0  ] | CR0=0x60000011 CR2=0x00000000
-03678568000i[CPU0  ] | CR3=0x00000000 CR4=0x00000000
-03678568000i[CMOS  ] Last time is 1563986291 (Thu Jul 25 00:38:11 2019)
-03678568000i[SIM   ] quit_sim called with exit code 1
+00014040189i[BIOS  ] Booting from 0000:7c00
+00014078901i[FLOPPY] partial read() on floppy image returns 144/512
+00014123345i[FLOPPY] read() on floppy image returns 0
+00014167789i[FLOPPY] read() on floppy image returns 0
+00014212233i[FLOPPY] read() on floppy image returns 0
+00014256677i[FLOPPY] read() on floppy image returns 0
+00269680000p[SDL2  ] >>PANIC<< POWER button turned off.
+00269680000i[CPU0  ] CPU is in protected mode (active)
+00269680000i[CPU0  ] CS.mode = 32 bit
+00269680000i[CPU0  ] SS.mode = 32 bit
+00269680000i[CPU0  ] EFER   = 0x00000000
+00269680000i[CPU0  ] | EAX=000b8002  EBX=00007d74  ECX=00090000  EDX=00000500
+00269680000i[CPU0  ] | ESP=0008fff8  EBP=00090000  ESI=000e0000  EDI=0000ffac
+00269680000i[CPU0  ] | IOPL=0 id vip vif ac vm rf nt of df if tf sf zf af pf cf
+00269680000i[CPU0  ] | SEG sltr(index|ti|rpl)     base    limit G D
+00269680000i[CPU0  ] |  CS:0008( 0001| 0|  0) 00000000 ffffffff 1 1
+00269680000i[CPU0  ] |  DS:0010( 0002| 0|  0) 00000000 ffffffff 1 1
+00269680000i[CPU0  ] |  SS:0010( 0002| 0|  0) 00000000 ffffffff 1 1
+00269680000i[CPU0  ] |  ES:0010( 0002| 0|  0) 00000000 ffffffff 1 1
+00269680000i[CPU0  ] |  FS:0010( 0002| 0|  0) 00000000 ffffffff 1 1
+00269680000i[CPU0  ] |  GS:0010( 0002| 0|  0) 00000000 ffffffff 1 1
+00269680000i[CPU0  ] | EIP=00001005 (00001005)
+00269680000i[CPU0  ] | CR0=0x60000011 CR2=0x00000000
+00269680000i[CPU0  ] | CR3=0x00000000 CR4=0x00000000
+00269680000i[CMOS  ] Last time is 1564019064 (Thu Jul 25 09:44:24 2019)
+00269680000i[SIM   ] quit_sim called with exit code 1
