@@ -7,6 +7,7 @@ HEADERS = $(wildcard kernel/*.h drivers/*.h)
 OBJ = ${C_SOURCES:.c=.o}
 
 CC = /usr/local/bin/i386-elf-gcc
+GDB = /usr/local/bin/i386-elf-gdb
 
 # -g: Use debugging symbols in gcc
 CFLAGS = -g
@@ -18,13 +19,16 @@ CFLAGS = -g
 all: os-image
 
 run: all
-	bochs
+	bochs -f ../bochsrc.txt
 
 os-image: boot/boot_sect.bin kernel.bin
 	cat $^ > $@
 
 kernel.bin: boot/kernel_entry.o ${OBJ}
 	i386-elf-ld -o $@ -Ttext 0x1000 $^ --oformat binary
+
+kernel.elf: boot/kernel_entry.o ${OBJ}
+	i386-elf-ld -o $@ -Ttext 0x1000 $^ 
 
 %.o: %.c ${HEADERS}
 	${CC} ${CFLAGS} -ffreestanding -c $< -o $@
