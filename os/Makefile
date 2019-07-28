@@ -42,3 +42,4 @@ clean:
 	rm -rf *.bin *.dis *.o *.elf
 	rm -rf kernel/*.o boot/*.bin drivers/*.o boot/*.o
 	rm os-image
+	rm ../*.lock
