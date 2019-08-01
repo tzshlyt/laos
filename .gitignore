@@ -1,0 +1,7 @@
+
+*.o
+*.elf
+
+bochsout.txt
+os/bochsout.txt
+
