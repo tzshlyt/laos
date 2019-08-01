@@ -1,8 +1,5 @@
 #include "../drivers/screen.h"
-<<<<<<< Updated upstream
-=======
 #include "utils.h"
->>>>>>> Stashed changes
 
 void some_func() {
 	char *video_memory = (char *)0xb8002;  // 屏幕地址
@@ -28,38 +25,26 @@ int main() {
 	//// VGA'单元'由字符及其控制数据组成
 	//// 例如'黑色背景上的白色'，'白色背景上的红色文字'等
 	//int offset_from_vga = position * 2;
-<<<<<<< Updated upstream
 
 	//char *vga = (char *)0xb8000;
 	//vga[offset_from_vga] = 'X';
 	//vga[offset_from_vga+1] = 0x0f;
 	
-	clear_screen();
-	print_at("X", 0, 0);
-	print_at("X", 1, 1);
-	print_at("E", MAX_COLS - 1, MAX_ROWS - 1);
-	print_at("hello world!", 0, 2);
-	print_at("This text spans multiple lines", 75, 10);
-	print_at("?", -1, -1);
-	print_at("There is a line\nbreak", 0, 20);
-	print("!!There is a line\nbreak");
-	print_at("What happens when we run out of space?", 45, 24);
-=======
+	// clear_screen();
+	// print_at("X", 0, 0);
+	// print_at("X", 1, 1);
+	// print_at("E", MAX_COLS - 1, MAX_ROWS - 1);
+	// print_at("hello world!", 0, 2);
+	// print_at("This text spans multiple lines", 75, 10);
+	// print_at("?", -1, -1);
+	// print_at("There is a line\nbreak", 0, 20);
+	// print("!!There is a line\nbreak");
+	// print_at("What happens when we run out of space?", 45, 24);
 
 	//char *vga = (char *)0xb8000;
 	//vga[offset_from_vga] = 'X';
 	//vga[offset_from_vga+1] = 0x0f;
 	
-	clear_screen();
-	print_at("X", 0, 0);
-	print_at("X", 1, 1);
-	print_at("E", MAX_COLS - 1, MAX_ROWS - 1);
-	print_at("hello world!", 0, 2);
-	print_at("This text spans multiple lines", 75, 10);
-	print_at("?", -1, -1);
-	print_at("There is a line\nbreak", 0, 20);
-	print("!!There is a line\nbreak");
-	print_at("What happens when we run out of space?", 45, 24);
 
 	clear_screen();	
 	int i = 0;
@@ -71,5 +56,4 @@ int main() {
 	print_at("This text forces the kernel to scroll. Row 0 will disappear. ", 60, 24);
 	print("And with this text, the kernel will scroll again, and row 1 will disappear too!");
 	print("=");
->>>>>>> Stashed changes
 }

@@ -34,6 +34,7 @@
 00000000000i[      ]   USB support: UHCI
 00000000000i[      ]   VGA extension support: vbe cirrus
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 00000000000i[MEM0  ] allocated memory at 0x115a32000. after alignment, vector=0x115a32000
 00000000000i[MEM0  ] 32.00MB
 00000000000i[MEM0  ] mem block size = 0x00020000, blocks=256
@@ -102,6 +103,41 @@
 00000000000i[PLUGIN] loaded plugin libbx_harddrv.so
 00000000000i[      ] lt_dlhandle is 0x7fe7ea648000
 >>>>>>> Stashed changes
+=======
+00000000000i[MEM0  ] allocated memory at 0x1139a4000. after alignment, vector=0x1139a4000
+00000000000i[MEM0  ] 32.00MB
+00000000000i[MEM0  ] mem block size = 0x00020000, blocks=256
+00000000000i[MEM0  ] rom at 0xfffe0000/131072 ('/usr/local/Cellar/bochs/2.6.9_2/share/bochs/BIOS-bochs-latest')
+00000000000i[      ] lt_dlhandle is 0x7fe7ea53d600
+00000000000i[PLUGIN] loaded plugin libbx_hdimage.so
+00000000000i[      ] lt_dlhandle is 0x7fe7ea6416c0
+00000000000i[PLUGIN] loaded plugin libbx_pci.so
+00000000000i[      ] lt_dlhandle is 0x7fe7ea642670
+00000000000i[PLUGIN] loaded plugin libbx_pci2isa.so
+00000000000i[      ] lt_dlhandle is 0x7fe7ea50fc40
+00000000000i[PLUGIN] loaded plugin libbx_usb_uhci.so
+00000000000i[      ] lt_dlhandle is 0x7fe7ea645240
+00000000000i[PLUGIN] loaded plugin libbx_acpi.so
+00000000000i[      ] lt_dlhandle is 0x7fe7ea645860
+00000000000i[PLUGIN] loaded plugin libbx_cmos.so
+00000000000i[      ] lt_dlhandle is 0x7fe7ea6458c0
+00000000000i[PLUGIN] loaded plugin libbx_dma.so
+00000000000i[      ] lt_dlhandle is 0x7fe7ea646090
+00000000000i[PLUGIN] loaded plugin libbx_pic.so
+00000000000i[      ] lt_dlhandle is 0x7fe7ea646660
+00000000000i[PLUGIN] loaded plugin libbx_pit.so
+00000000000i[      ] lt_dlhandle is 0x7fe7ea43bf40
+00000000000i[PLUGIN] loaded plugin libbx_vga.so
+00000000000i[      ] lt_dlhandle is 0x7fe7ea449910
+00000000000i[PLUGIN] loaded plugin libbx_floppy.so
+00000000000i[      ] lt_dlhandle is 0x7fe7ea646d20
+00000000000i[PLUGIN] loaded plugin libbx_ioapic.so
+00000000000i[      ] lt_dlhandle is 0x7fe7ea6471d0
+00000000000i[PLUGIN] loaded plugin libbx_keyboard.so
+00000000000i[      ] lt_dlhandle is 0x7fe7ea647c80
+00000000000i[PLUGIN] loaded plugin libbx_harddrv.so
+00000000000i[      ] lt_dlhandle is 0x7fe7ea648000
+>>>>>>> Stashed changes
 00000000000i[PLUGIN] loaded plugin libbx_pci_ide.so
 00000000000i[PLUGIN] init_dev of 'pci' plugin device by virtual method
 00000000000i[DEV   ] i440FX PMC present at device 0, function 0
@@ -110,7 +146,11 @@
 00000000000i[PLUGIN] init_dev of 'cmos' plugin device by virtual method
 00000000000i[CMOS  ] Using local time for initial clock
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 00000000000i[CMOS  ] Setting initial clock to: Sun Jul 28 01:29:20 2019 (time0=1564248560)
+=======
+00000000000i[CMOS  ] Setting initial clock to: Sun Jul 28 12:40:28 2019 (time0=1564288828)
+>>>>>>> Stashed changes
 =======
 00000000000i[CMOS  ] Setting initial clock to: Sun Jul 28 12:40:28 2019 (time0=1564288828)
 >>>>>>> Stashed changes
@@ -261,6 +301,7 @@
 00001534516i[VBIOS ] VBE Bios $Id: vbe.c,v 1.65 2014/07/08 18:02:25 vruppert Exp $
 00014040189i[BIOS  ] Booting from 0000:7c00
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 00014212233i[FLOPPY] partial read() on floppy image returns 376/512
 00014256677i[FLOPPY] read() on floppy image returns 0
 00710152000p[SDL2  ] >>PANIC<< POWER button turned off.
@@ -284,6 +325,8 @@
 00710152000i[CMOS  ] Last time is 1564248737 (Sun Jul 28 01:32:17 2019)
 00710152000i[SIM   ] quit_sim called with exit code 1
 =======
+=======
+>>>>>>> Stashed changes
 00327424000p[SDL2  ] >>PANIC<< POWER button turned off.
 00327424000i[CPU0  ] CPU is in protected mode (active)
 00327424000i[CPU0  ] CS.mode = 32 bit
@@ -304,4 +347,7 @@
 00327424000i[CPU0  ] | CR3=0x00000000 CR4=0x00000000
 00327424000i[CMOS  ] Last time is 1564288909 (Sun Jul 28 12:41:49 2019)
 00327424000i[SIM   ] quit_sim called with exit code 1
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes

@@ -1,10 +1,6 @@
 #include "screen.h"
 #include "ports.h"
-<<<<<<< Updated upstream
-
-=======
 #include "../kernel/utils.h"
->>>>>>> Stashed changes
 
 int get_cursor();
 void set_cursor(int offset);
@@ -12,10 +8,7 @@ int print_char(char c, int col, int row, char attr);
 int get_screen_offset(int col, int row);
 int get_offset_row(int offset);
 int get_offset_col(int offset);
-<<<<<<< Updated upstream
-=======
 int handle_scrolling(int offset);
->>>>>>> Stashed changes
 
 /*******************************************
  * Public functions 
@@ -87,11 +80,8 @@ int print_char(char character, int col, int row, char attribute_byte) {
 		offset += 2;
 	}
 
-<<<<<<< Updated upstream
-=======
 	offset = handle_scrolling(offset);
 
->>>>>>> Stashed changes
 	set_cursor(offset);
 	return offset;
 }
@@ -126,8 +116,6 @@ int get_offset_row(int offset) {
 int get_offset_col(int offset) { 
 	return (offset - (get_offset_row(offset)*2*MAX_COLS))/2; 
 }
-<<<<<<< Updated upstream
-=======
 
 int handle_scrolling(int cursor_offset) {
 	if (cursor_offset < MAX_ROWS*MAX_COLS*2) {
@@ -151,4 +139,3 @@ int handle_scrolling(int cursor_offset) {
 	return cursor_offset;
 }
 
->>>>>>> Stashed changes
