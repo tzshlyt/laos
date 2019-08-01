@@ -30,14 +30,10 @@ load_kernel:
 	call print_string
 
 	mov bx, KERNEL_OFFSET		; 设置从磁盘加载参数，从磁盘读取保存在 0x1000
-	mov dh, 5 			; 从磁盘加载2个扇区（包括引导扇区）到内存地址 KERNEL_OFFSET
+	mov dh, 5 					; 从磁盘加载5个扇区（包括引导扇区）到内存地址 KERNEL_OFFSET
 	mov dl, [BOOT_DRIVE]
 	call disk_load
 	
-	;mov dx, [KERNEL_OFFSET]
-	;call print_ln
-	;call print_hex
-
 	ret
 
 [bits 32]

@@ -1,6 +1,10 @@
 #include "screen.h"
 #include "ports.h"
+<<<<<<< Updated upstream
 
+=======
+#include "../kernel/utils.h"
+>>>>>>> Stashed changes
 
 int get_cursor();
 void set_cursor(int offset);
@@ -8,6 +12,10 @@ int print_char(char c, int col, int row, char attr);
 int get_screen_offset(int col, int row);
 int get_offset_row(int offset);
 int get_offset_col(int offset);
+<<<<<<< Updated upstream
+=======
+int handle_scrolling(int offset);
+>>>>>>> Stashed changes
 
 /*******************************************
  * Public functions 
@@ -79,6 +87,11 @@ int print_char(char character, int col, int row, char attribute_byte) {
 		offset += 2;
 	}
 
+<<<<<<< Updated upstream
+=======
+	offset = handle_scrolling(offset);
+
+>>>>>>> Stashed changes
 	set_cursor(offset);
 	return offset;
 }
@@ -113,3 +126,29 @@ int get_offset_row(int offset) {
 int get_offset_col(int offset) { 
 	return (offset - (get_offset_row(offset)*2*MAX_COLS))/2; 
 }
+<<<<<<< Updated upstream
+=======
+
+int handle_scrolling(int cursor_offset) {
+	if (cursor_offset < MAX_ROWS*MAX_COLS*2) {
+		return cursor_offset;
+	}
+	
+	int i;
+	for (i=1; i<MAX_ROWS; i++) {
+		memory_copy(get_screen_offset(0, i) + VIDEO_ADDRESS,
+			    get_screen_offset(0, i-1) + VIDEO_ADDRESS,
+			    MAX_COLS * 2
+		);
+	}		
+
+	char* last_line = get_screen_offset(0, MAX_ROWS-1) + VIDEO_ADDRESS;
+	for(i=0; i < MAX_COLS*2; i++) {
+		last_line[i] = 0;
+	}
+
+	cursor_offset -= 2 * MAX_COLS;
+	return cursor_offset;
+}
+
+>>>>>>> Stashed changes

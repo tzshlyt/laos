@@ -5,7 +5,7 @@ switch_to_pm:
 	lgdt [gdt_descriptor]	; 加载GDT描述
 	mov eax, cr0
 	or eax, 0x1		
-	mov cr0, eax		; 设置cr0 为1
+	mov cr0, eax		    ; 设置cr0 为1
 	jmp CODE_SEG:init_pm   	; 长跳转
 
 [bits 32]

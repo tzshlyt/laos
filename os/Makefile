@@ -30,13 +30,16 @@ kernel.bin: boot/kernel_entry.o ${OBJ}
 kernel.elf: boot/kernel_entry.o ${OBJ}
 	i386-elf-ld -o $@ -Ttext 0x1000 $^ 
 
+# Open the connection to qemu and load our kernel-object file with symbols
+debug: os-image kernel.elf
+	qemu-system-i386 -s -fda os-image &
+	${GDB} -ex "target remote localhost:1234" -ex "symbol-file kernel.elf"
+
 %.o: %.c ${HEADERS}
 	${CC} ${CFLAGS} -ffreestanding -c $< -o $@
 
 %.o: %.asm
 	nasm $< -f elf -o $@
-
-
 
 clean:
 	rm -rf *.bin *.dis *.o *.elf
