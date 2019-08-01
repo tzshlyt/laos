@@ -2,6 +2,10 @@
 *.o
 *.elf
 
+tags
+
 bochsout.txt
 os/bochsout.txt
+
+os/os-image
 

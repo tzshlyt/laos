@@ -1,9 +1,10 @@
 
 # 批量匹配c文件名 kernel.c --> kernel
-C_SOURCES = $(wildcard kernel/*.c drivers/*.c)
+C_SOURCES = $(wildcard kernel/*.c drivers/*.c) 
 HEADERS = $(wildcard kernel/*.h drivers/*.h)
 
 # kernel.c --> kernel.o 
+# Nice syntax for file extension replacement
 OBJ = ${C_SOURCES:.c=.o}
 
 CC = /usr/local/bin/i386-elf-gcc
@@ -12,14 +13,9 @@ GDB = /usr/local/bin/i386-elf-gdb
 # -g: Use debugging symbols in gcc
 CFLAGS = -g
 
-%.bin: %.asm
-	nasm $< -f bin -o $@
-
-
-all: os-image
-
-run: all
-	bochs -f ../bochsrc.txt
+run: os-image
+# 	bochs -f ../bochsrc.txt        # bochs 启动
+	qemu-system-i386 -fda os-image	# qemu 启动
 
 os-image: boot/boot_sect.bin kernel.bin
 	cat $^ > $@
@@ -41,8 +37,10 @@ debug: os-image kernel.elf
 %.o: %.asm
 	nasm $< -f elf -o $@
 
+%.bin: %.asm
+	nasm $< -f bin -o $@
+
 clean:
 	rm -rf *.bin *.dis *.o *.elf
-	rm -rf kernel/*.o boot/*.bin drivers/*.o boot/*.o
-	rm os-image
+	rm -rf kernel/*.o boot/*.bin drivers/*.o boot/*.o cpu/*.o
 	rm ../*.lock

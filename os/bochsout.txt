@@ -35,6 +35,7 @@
 00000000000i[      ]   VGA extension support: vbe cirrus
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 00000000000i[MEM0  ] allocated memory at 0x115a32000. after alignment, vector=0x115a32000
 00000000000i[MEM0  ] 32.00MB
 00000000000i[MEM0  ] mem block size = 0x00020000, blocks=256
@@ -70,37 +71,41 @@
 00000000000i[      ] lt_dlhandle is 0x7feffce38df0
 =======
 00000000000i[MEM0  ] allocated memory at 0x1139a4000. after alignment, vector=0x1139a4000
+=======
+00000000000i[MEM0  ] allocated memory at 0x10fa2e000. after alignment, vector=0x10fa2e000
+>>>>>>> Stashed changes
 00000000000i[MEM0  ] 32.00MB
 00000000000i[MEM0  ] mem block size = 0x00020000, blocks=256
 00000000000i[MEM0  ] rom at 0xfffe0000/131072 ('/usr/local/Cellar/bochs/2.6.9_2/share/bochs/BIOS-bochs-latest')
-00000000000i[      ] lt_dlhandle is 0x7fe7ea53d600
+00000000000i[      ] lt_dlhandle is 0x7fd75cfa3940
 00000000000i[PLUGIN] loaded plugin libbx_hdimage.so
-00000000000i[      ] lt_dlhandle is 0x7fe7ea6416c0
+00000000000i[      ] lt_dlhandle is 0x7fd75cd98130
 00000000000i[PLUGIN] loaded plugin libbx_pci.so
-00000000000i[      ] lt_dlhandle is 0x7fe7ea642670
+00000000000i[      ] lt_dlhandle is 0x7fd75cd98620
 00000000000i[PLUGIN] loaded plugin libbx_pci2isa.so
-00000000000i[      ] lt_dlhandle is 0x7fe7ea50fc40
+00000000000i[      ] lt_dlhandle is 0x7fd75cd98e20
 00000000000i[PLUGIN] loaded plugin libbx_usb_uhci.so
-00000000000i[      ] lt_dlhandle is 0x7fe7ea645240
+00000000000i[      ] lt_dlhandle is 0x7fd75cd9a910
 00000000000i[PLUGIN] loaded plugin libbx_acpi.so
-00000000000i[      ] lt_dlhandle is 0x7fe7ea645860
+00000000000i[      ] lt_dlhandle is 0x7fd75ce006b0
 00000000000i[PLUGIN] loaded plugin libbx_cmos.so
-00000000000i[      ] lt_dlhandle is 0x7fe7ea6458c0
+00000000000i[      ] lt_dlhandle is 0x7fd75cd9ade0
 00000000000i[PLUGIN] loaded plugin libbx_dma.so
-00000000000i[      ] lt_dlhandle is 0x7fe7ea646090
+00000000000i[      ] lt_dlhandle is 0x7fd75cd9b980
 00000000000i[PLUGIN] loaded plugin libbx_pic.so
-00000000000i[      ] lt_dlhandle is 0x7fe7ea646660
+00000000000i[      ] lt_dlhandle is 0x7fd75cd9be90
 00000000000i[PLUGIN] loaded plugin libbx_pit.so
-00000000000i[      ] lt_dlhandle is 0x7fe7ea43bf40
+00000000000i[      ] lt_dlhandle is 0x7fd75cd9c370
 00000000000i[PLUGIN] loaded plugin libbx_vga.so
-00000000000i[      ] lt_dlhandle is 0x7fe7ea449910
+00000000000i[      ] lt_dlhandle is 0x7fd75cfa3be0
 00000000000i[PLUGIN] loaded plugin libbx_floppy.so
-00000000000i[      ] lt_dlhandle is 0x7fe7ea646d20
+00000000000i[      ] lt_dlhandle is 0x7fd75cd9c850
 00000000000i[PLUGIN] loaded plugin libbx_ioapic.so
-00000000000i[      ] lt_dlhandle is 0x7fe7ea6471d0
+00000000000i[      ] lt_dlhandle is 0x7fd75cd9ccb0
 00000000000i[PLUGIN] loaded plugin libbx_keyboard.so
-00000000000i[      ] lt_dlhandle is 0x7fe7ea647c80
+00000000000i[      ] lt_dlhandle is 0x7fd75cd9d720
 00000000000i[PLUGIN] loaded plugin libbx_harddrv.so
+<<<<<<< Updated upstream
 00000000000i[      ] lt_dlhandle is 0x7fe7ea648000
 >>>>>>> Stashed changes
 =======
@@ -138,6 +143,9 @@
 00000000000i[PLUGIN] loaded plugin libbx_harddrv.so
 00000000000i[      ] lt_dlhandle is 0x7fe7ea648000
 >>>>>>> Stashed changes
+=======
+00000000000i[      ] lt_dlhandle is 0x7fd75cd9dac0
+>>>>>>> Stashed changes
 00000000000i[PLUGIN] loaded plugin libbx_pci_ide.so
 00000000000i[PLUGIN] init_dev of 'pci' plugin device by virtual method
 00000000000i[DEV   ] i440FX PMC present at device 0, function 0
@@ -147,12 +155,16 @@
 00000000000i[CMOS  ] Using local time for initial clock
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 00000000000i[CMOS  ] Setting initial clock to: Sun Jul 28 01:29:20 2019 (time0=1564248560)
 =======
 00000000000i[CMOS  ] Setting initial clock to: Sun Jul 28 12:40:28 2019 (time0=1564288828)
 >>>>>>> Stashed changes
 =======
 00000000000i[CMOS  ] Setting initial clock to: Sun Jul 28 12:40:28 2019 (time0=1564288828)
+>>>>>>> Stashed changes
+=======
+00000000000i[CMOS  ] Setting initial clock to: Thu Aug  1 17:09:13 2019 (time0=1564650553)
 >>>>>>> Stashed changes
 00000000000i[PLUGIN] init_dev of 'dma' plugin device by virtual method
 00000000000i[DMA   ] channel 4 used by cascade
@@ -302,6 +314,7 @@
 00014040189i[BIOS  ] Booting from 0000:7c00
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 00014212233i[FLOPPY] partial read() on floppy image returns 376/512
 00014256677i[FLOPPY] read() on floppy image returns 0
 00710152000p[SDL2  ] >>PANIC<< POWER button turned off.
@@ -350,4 +363,26 @@
 <<<<<<< Updated upstream
 >>>>>>> Stashed changes
 =======
+>>>>>>> Stashed changes
+=======
+00394584000p[SDL2  ] >>PANIC<< POWER button turned off.
+00394584000i[CPU0  ] CPU is in protected mode (active)
+00394584000i[CPU0  ] CS.mode = 32 bit
+00394584000i[CPU0  ] SS.mode = 32 bit
+00394584000i[CPU0  ] EFER   = 0x00000000
+00394584000i[CPU0  ] | EAX=00001700  EBX=00007d74  ECX=0008fff8  EDX=00000001
+00394584000i[CPU0  ] | ESP=0008fff8  EBP=00090000  ESI=000e0000  EDI=0000ffac
+00394584000i[CPU0  ] | IOPL=0 id vip vif ac vm rf nt of df if tf sf zf af pf cf
+00394584000i[CPU0  ] | SEG sltr(index|ti|rpl)     base    limit G D
+00394584000i[CPU0  ] |  CS:0008( 0001| 0|  0) 00000000 ffffffff 1 1
+00394584000i[CPU0  ] |  DS:0010( 0002| 0|  0) 00000000 ffffffff 1 1
+00394584000i[CPU0  ] |  SS:0010( 0002| 0|  0) 00000000 ffffffff 1 1
+00394584000i[CPU0  ] |  ES:0010( 0002| 0|  0) 00000000 ffffffff 1 1
+00394584000i[CPU0  ] |  FS:0010( 0002| 0|  0) 00000000 ffffffff 1 1
+00394584000i[CPU0  ] |  GS:0010( 0002| 0|  0) 00000000 ffffffff 1 1
+00394584000i[CPU0  ] | EIP=00001005 (00001005)
+00394584000i[CPU0  ] | CR0=0x60000011 CR2=0x00000000
+00394584000i[CPU0  ] | CR3=0x00000000 CR4=0x00000000
+00394584000i[CMOS  ] Last time is 1564650651 (Thu Aug  1 17:10:51 2019)
+00394584000i[SIM   ] quit_sim called with exit code 1
 >>>>>>> Stashed changes
