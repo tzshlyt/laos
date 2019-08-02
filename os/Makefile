@@ -1,11 +1,11 @@
 
 # 批量匹配c文件名 kernel.c --> kernel
-C_SOURCES = $(wildcard kernel/*.c drivers/*.c) 
-HEADERS = $(wildcard kernel/*.h drivers/*.h)
+C_SOURCES = $(wildcard kernel/*.c drivers/*.c cpu/*.c) 
+HEADERS = $(wildcard kernel/*.h drivers/*.h cpu/*.h)
 
 # kernel.c --> kernel.o 
 # Nice syntax for file extension replacement
-OBJ = ${C_SOURCES:.c=.o}
+OBJ = ${C_SOURCES:.c=.o cpu/interrupt.o}
 
 CC = /usr/local/bin/i386-elf-gcc
 GDB = /usr/local/bin/i386-elf-gdb
@@ -28,7 +28,7 @@ kernel.elf: boot/kernel_entry.o ${OBJ}
 
 # Open the connection to qemu and load our kernel-object file with symbols
 debug: os-image kernel.elf
-	qemu-system-i386 -s -fda os-image &
+	qemu-system-i386 -s -fda os-image -d guest_errors,int &
 	${GDB} -ex "target remote localhost:1234" -ex "symbol-file kernel.elf"
 
 %.o: %.c ${HEADERS}

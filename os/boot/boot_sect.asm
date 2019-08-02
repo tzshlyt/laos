@@ -10,12 +10,13 @@ mov sp, bp
 
 mov bx, MSG_REAL_MODE  	; 打印进入16-bit模式
 call print_string
+call print_ln
 
 call load_kernel	; 加载内核
 
 call switch_to_pm	; 切换到32-bit模式, 无返回
 
-jmp $
+jmp $			; 永不执行
 
 %include "boot/print.asm"
 %include "boot/disk_load.asm"
@@ -28,9 +29,11 @@ jmp $
 load_kernel:
 	mov bx, MSG_LOAD_KERNEL		; 打印正在加载内核
 	call print_string
+	call print_ln
 
 	mov bx, KERNEL_OFFSET		; 设置从磁盘加载参数，从磁盘读取保存在 0x1000
-	mov dh, 5 					; 从磁盘加载5个扇区（包括引导扇区）到内存地址 KERNEL_OFFSET
+	mov dh, 31 			; 从磁盘加载31个扇区（包括引导扇区）到内存地址 KERNEL_OFFSET
+					;Our future kernel will be larger, make this big
 	mov dl, [BOOT_DRIVE]
 	call disk_load
 	
