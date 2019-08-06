@@ -1,6 +1,7 @@
 #include "../drivers/screen.h"
 #include "utils.h"
 #include "../cpu/timer.h"
+#include "../drivers/keyboard.h"
 
 void some_func() {
 	char *video_memory = (char *)0xb8000;  // 屏幕地址
@@ -70,6 +71,12 @@ void timer() {
 	init_timer(100); // 100Hz 10ms, 但是显示效果好像不对
 }
 
+void keyboard() {
+	isr_install();
+	asm volatile("sti");
+	init_keyboard();
+}
+
 int main() {
-	timer();
+	keyboard();
 }
