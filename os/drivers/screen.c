@@ -48,11 +48,18 @@ void print(char *message) {
 	print_at(message, -1, -1);
 }
 
+void print_backspace() {
+	int offset = get_cursor() - 2;
+	int row = get_offset_row(offset);
+	int col = get_offset_col(offset);
+	print_char(0x08, col, row, WHITE_ON_BLACK);
+}
+
 /*******************************************
  * Private functions 
  * *****************************************/
 int print_char(char character, int col, int row, char attribute_byte) {
-	unsigned char *vidmem = (unsigned char *) VIDEO_ADDRESS;
+	u8 *vidmem = (u8 *) VIDEO_ADDRESS;
 	
 	if (!attribute_byte) {
 		attribute_byte = WHITE_ON_BLACK;
@@ -74,7 +81,10 @@ int print_char(char character, int col, int row, char attribute_byte) {
 	if (character == '\n') {
 		int rows = get_offset_row(offset);
 		offset = get_screen_offset(0, rows + 1);
-	} else {
+	} else if (character == 0x08) { // Backspace
+        vidmem[offset] = ' ';
+        vidmem[offset+1] = attribute_byte;    
+    } else {
 		vidmem[offset] = character;
 		vidmem[offset+1] = attribute_byte;
 		offset += 2;
