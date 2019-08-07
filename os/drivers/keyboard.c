@@ -5,16 +5,22 @@
 #include "../libc/string.h"
 #include "../libc/function.h"
 
+#define BACKSPACE 0x0E
+#define ENTER 0x1C
+
+
+
 void print_letter(u8 scancode);
 
 static void keyboard_callback(registers_t regs) {
 	u8 scancode = port_byte_in(0x60);
-	char *sc_ascii = "";
+	
+    char sc_ascii[10]; 
 	int_to_ascii(scancode, sc_ascii);
 	print("Keyboard scancode: ");
 	print(sc_ascii);
 	print(", ");
-	print_letter(scancode);
+    print_letter(scancode);
 	print("\n");
     UNUSED(regs);	
 }
