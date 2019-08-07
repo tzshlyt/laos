@@ -1,18 +1,4 @@
-#include "utils.h"
-
-void memory_copy(char* source, char* dest, int no_bytes) {
-	int i;
-	for (i=0; i<no_bytes; i++) {
-		*(dest + i) = *(source + i);
-	}
-}
-
-void memeoy_set(u8 *dest, u8 val, u32 len) {
-	u8 *temp = (u8 *)dest;
-	for(; len != 0; len--) {
-		*temp++ = val;
-	}
-}
+#include "string.h"
 
 void int_to_ascii(int n, char str[]) {
 	int i, sign;
@@ -49,4 +35,25 @@ int strlen(char s[]) {
 		++i;
 	}
 	return i;
+}
+
+void append(char s[], char n) {
+	int len = strlen(s);
+	s[len] = n;
+	s[len+1] = '\0';
+}
+
+void backspace(char s[]) {
+	int len = strlen(s);
+	s[len-1] = '\0';
+}
+
+/* K&R
+ * Returns <0 if s1<s2, 0 if s1==s2, >0 if s1>s2 */
+int strcmp(char s1[], char s2[]) {
+	int i;
+	for(i = 0; s1[i] == s2[i]; i++) {
+		if (s1[i] == '\0') return 0;
+	}
+	return s1[i] - s2[i];
 }

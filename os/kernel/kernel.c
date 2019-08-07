@@ -1,7 +1,10 @@
+#include "kernel.h"
+#include "../cpu/isr.h"
 #include "../drivers/screen.h"
-#include "utils.h"
+#include "../libc/string.h"
 #include "../cpu/timer.h"
 #include "../drivers/keyboard.h"
+#include "../cpu/ports.h"
 
 void some_func() {
 	char *video_memory = (char *)0xb8000;  // 屏幕地址
@@ -68,7 +71,7 @@ void interrupt() {
 void timer() {
 	isr_install();
 	asm volatile("sti");
-	init_timer(100); // 100Hz 10ms, 但是显示效果好像不对
+	//init_timer(100); // 100Hz 10ms, 但是显示效果好像不对
 }
 
 void keyboard() {
@@ -77,6 +80,8 @@ void keyboard() {
 	init_keyboard();
 }
 
-int main() {
-	keyboard();
+void main() {
+    isr_install();
+    irq_install();
+
 }

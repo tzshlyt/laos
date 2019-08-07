@@ -1,16 +1,22 @@
 #include "timer.h"
 #include "../drivers/screen.h"
 #include "isr.h"
+#include "../libc/function.h"
+#include "ports.h"
 
 u32 tick = 0;
 
 static void timer_callback(registers_t regs) {
 	tick++;
-	print("Tick: ");
+	
+    /*
+    print("Tick: ");
 	char tick_ascii[256];
 	int_to_ascii(tick, tick_ascii);
 	print(tick_ascii);
 	print("\n");
+    */
+    UNUSED(regs);
 }
 
 // https://wiki.osdev.org/Programmable_Interval_Timer
@@ -32,5 +38,4 @@ void init_timer(u32 freq) {
 	port_byte_out(0x43, 0x36); //0x36 --> 110110b,
 	port_byte_out(0x40, low);
 	port_byte_out(0x40, high);
-
 }

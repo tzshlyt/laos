@@ -1,7 +1,7 @@
 
 # 批量匹配c文件名 kernel.c --> kernel
-C_SOURCES = $(wildcard kernel/*.c drivers/*.c cpu/*.c) 
-HEADERS = $(wildcard kernel/*.h drivers/*.h cpu/*.h)
+C_SOURCES = $(wildcard kernel/*.c drivers/*.c cpu/*.c libc/*.c) 
+HEADERS = $(wildcard kernel/*.h drivers/*.h cpu/*.h libc/*.h)
 
 # kernel.c --> kernel.o 
 # Nice syntax for file extension replacement
@@ -11,7 +11,7 @@ CC = /usr/local/bin/i386-elf-gcc
 GDB = /usr/local/bin/i386-elf-gdb
 
 # -g: Use debugging symbols in gcc
-CFLAGS = -g
+CFLAGS = -g -m32 -nostdlib -nostdinc -fno-builtin -fno-stack-protector -nostartfiles -nodefaultlibs -Wall -Wextra -Werror
 
 run: os-image
 # 	bochs -f ../bochsrc.txt        # bochs 启动

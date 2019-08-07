@@ -1,5 +1,4 @@
 #include "idt.h"
-#include "../kernel/utils.h"
 
 void set_idt_gate(int n, u32 handler) {
 	idt[n].base_lo = low_16(handler);

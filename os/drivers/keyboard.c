@@ -1,17 +1,22 @@
 #include "keyboard.h"
-#include "ports.h"
+#include "../cpu/ports.h"
 #include "../cpu/isr.h"
 #include "screen.h"
+#include "../libc/string.h"
+#include "../libc/function.h"
+
+void print_letter(u8 scancode);
 
 static void keyboard_callback(registers_t regs) {
 	u8 scancode = port_byte_in(0x60);
-	char *sc_ascii;
+	char *sc_ascii = "";
 	int_to_ascii(scancode, sc_ascii);
 	print("Keyboard scancode: ");
 	print(sc_ascii);
 	print(", ");
 	print_letter(scancode);
-	print("\n");	
+	print("\n");
+    UNUSED(regs);	
 }
 
 void init_keyboard() {

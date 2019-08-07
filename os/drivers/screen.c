@@ -1,6 +1,6 @@
 #include "screen.h"
-#include "ports.h"
-#include "../kernel/utils.h"
+#include "../cpu/ports.h"
+#include "../libc/mem.h"
 
 int get_cursor();
 void set_cursor(int offset);
@@ -124,13 +124,13 @@ int handle_scrolling(int cursor_offset) {
 	
 	int i;
 	for (i=1; i<MAX_ROWS; i++) {
-		memory_copy(get_screen_offset(0, i) + VIDEO_ADDRESS,
-			    get_screen_offset(0, i-1) + VIDEO_ADDRESS,
+		memory_copy((u8 *)(get_screen_offset(0, i) + VIDEO_ADDRESS),
+			    (u8 *)(get_screen_offset(0, i-1) + VIDEO_ADDRESS),
 			    MAX_COLS * 2
 		);
 	}		
 
-	char* last_line = get_screen_offset(0, MAX_ROWS-1) + VIDEO_ADDRESS;
+	char* last_line = (char *)(get_screen_offset(0, MAX_ROWS-1) + VIDEO_ADDRESS);
 	for(i=0; i < MAX_COLS*2; i++) {
 		last_line[i] = 0;
 	}
