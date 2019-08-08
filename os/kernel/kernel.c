@@ -65,8 +65,8 @@ void scroll() {
 
 void interrupt() {
 	isr_install();
-	__asm__ __volatile__("int $2");
-	__asm__ __volatile__("int $3");
+	asm volatile("int $2");
+	asm volatile("int $3");
 }
 
 void timer() {
@@ -81,9 +81,12 @@ void keyboard() {
 	init_keyboard();
 }
 
-void main() {
+void kernel_main() {
     isr_install();
     irq_install();
+
+    asm("int $2");
+    asm("int $3");
 
     print("Type something, it will go through the kernel\n"
         "Type END to halt the CPU\n> ");
@@ -94,8 +97,8 @@ void user_input(char *input) {
         print("Stopping the CPU. Bye!\n");
         asm volatile("hlt");
     } else if (strcmp(input, "PAGE") == 0) {
-        u32 phys_addr;
-        u32 page = kmalloc(1, 1, &phys_addr);
+        uint32_t phys_addr;
+        uint32_t page = kmalloc(1, 1, &phys_addr);
         char page_str[16] = "";
         hx_to_ascii(page, page_str);
         char phys_str[16] = "";

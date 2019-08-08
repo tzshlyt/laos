@@ -59,7 +59,7 @@ void print_backspace() {
  * Private functions 
  * *****************************************/
 int print_char(char character, int col, int row, char attribute_byte) {
-	u8 *vidmem = (u8 *) VIDEO_ADDRESS;
+	uint8_t *vidmem = (uint8_t *) VIDEO_ADDRESS;
 	
 	if (!attribute_byte) {
 		attribute_byte = WHITE_ON_BLACK;
@@ -134,8 +134,8 @@ int handle_scrolling(int cursor_offset) {
 	
 	int i;
 	for (i=1; i<MAX_ROWS; i++) {
-		memory_copy((u8 *)(get_screen_offset(0, i) + VIDEO_ADDRESS),
-			    (u8 *)(get_screen_offset(0, i-1) + VIDEO_ADDRESS),
+		memory_copy((uint8_t *)(get_screen_offset(0, i) + VIDEO_ADDRESS),
+			    (uint8_t *)(get_screen_offset(0, i-1) + VIDEO_ADDRESS),
 			    MAX_COLS * 2
 		);
 	}		

@@ -24,10 +24,10 @@ const char sc_ascii[] = { '?', '?', '1', '2', '3', '4', '5', '6',
         'H', 'J', 'K', 'L', ';', '\'', '`', '?', '\\', 'Z', 'X', 'C', 'V', 
         'B', 'N', 'M', ',', '.', '/', '?', '?', '?', ' '};
 
-void print_letter(u8 scancode);
+void print_letter(uint8_t scancode);
 
-static void keyboard_callback(registers_t regs) {
-	u8 scancode = port_byte_in(0x60);
+static void keyboard_callback(registers_t *regs) {
+	uint8_t scancode = port_byte_in(0x60);
 
     if (scancode > SC_MAX) return;
 	if (scancode == BACKSPACE) {
@@ -61,7 +61,7 @@ void init_keyboard() {
 	register_interrupt_handler(IRQ1, keyboard_callback);
 }
 
-void print_letter(u8 scancode) {
+void print_letter(uint8_t scancode) {
     switch (scancode) {
         case 0x0:
             print("ERROR");
