@@ -1,5 +1,21 @@
 # laos
 
+- Boot from scratch, without GRUB - [✔]
+- Enter 32-bit mode - [✔]
+- Jump from Assembly to C - [✔]
+- Interrupt handling - [✔]
+- Screen output and keyboard input - [✔]
+- A tiny, basic `libc` which grows to suit our needs - [✔]
+- Memory management
+- Write a filesystem to store files
+- Create a very simple shell
+- User mode
+- Maybe we will write a simple text editor
+- Multiple processes and scheduling
+- A BASIC interpreter, like in the 70s!
+- A GUI
+- Networking
+
 #### Mem management
 
 0. Higher half loader [✔]
