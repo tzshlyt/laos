@@ -6,44 +6,49 @@
 ; This is our common ISR stub. It saves the processor state, sets
 ; up for kernel mode segments, calls the C-level fault handler,
 ; and finally restores the stack frame.
+; 所有中断处理函数共有的保护现场操作
 isr_common_stub:
 	; 1. Save CPU state
-	pusha		; Pushes edi,esi,ebp,esp,ebx,edx,ecx,eax
-	mov ax, ds	; Lower 16-bits of eax = ds
-	push eax 	; save the data segment descriptor
-	mov ax, 0x10	; kernel data segment descriptor
+	pusha		        ; Pushes edi,esi,ebp,esp,ebx,edx,ecx,eax
+	mov ax, ds	        ; Lower 16-bits of eax = ds, 保存数据段描述符
+	push eax 	        ; save the data segment descriptor
+
+	mov ax, 0x10	    ; kernel data segment descriptor,  加载内核数据段描述符表
 	mov ds, ax
 	mov es, ax
 	mov fs, ax
 	mov gs, ax
-    push esp    ; registers_t *r
-	
-	; 2. Call C handler
-	cld         ; C code following the sysV ABI requires DF to be clear on function entry
-    call isr_handler
 
-	; 3. Restore state
+    push esp            ; registers_t *r, 此时的 esp 寄存器的值等价于 pt_regs 结构体的指针
+
+	; 2. Call C handler
+	cld                 ; C code following the sysV ABI requires DF to be clear on function entry
+    call isr_handler    ; 在 C 语言代码里
+
+    ; 3. Restore state
 	pop esp
     pop eax
 	mov ds, ax
 	mov es, ax
 	mov fs, ax
 	mov gs, ax
-	popa
-	add esp, 8	; cleans up the pushed error code and pushed ISR number
-	;sti        ; cli is redundant, since we already established on the IDT entries if interrupts are enabled within a handler using the idt_gate_t flags
-                ; sti is also redundant, as iret loads the eflags value from the stack, which contains a bit telling whether interrupts are on or off. In other words the interrupt handler automatically restores interrupts whether or not interrupts were enabled before this interrupt
-	
+	popa                ; Pops edi, esi, ebp, esp, ebx, edx, ecx, eax
+	add esp, 8	        ; cleans up the pushed error code and pushed ISR number, 清理栈里的 error code 和 ISR
+	;sti                ; cli is redundant, since we already established on the IDT entries if interrupts are enabled within a handler using the idt_gate_t flags
+                        ; sti is also redundant, as iret loads the eflags value from the stack, which contains a bit telling whether interrupts are on or off.
+                        ;In other words the interrupt handler automatically restores interrupts whether or not interrupts were enabled before this interrupt
+
 	;The IRET instruction is specifically designed to return from an interrupt
-	iret		; pops 5 things at once: CS, EIP, EFLAGS, SS, and ESp
+	iret		        ; pops 5 things at once: CS, EIP, EFLAGS, SS, and ESp
 
 
-; Common IRQ code. Identical to ISR code except for the 'call' 
+; Common IRQ code. Identical to ISR code except for the 'call'
 ; and the 'pop ebx'
 irq_common_stub:
 	pusha
 	mov ax, ds
 	push eax
+
 	mov ax, 0x10
 	mov ds, ax
 	mov es, ax
@@ -61,403 +66,93 @@ irq_common_stub:
 	mov es, bx
 	mov fs, bx
 	mov gs, bx
+
 	popa
 	add esp, 8
-	sti
-iret 
+    iret
 
-
-; 宏定义
-%macro ISR_NOERRCODE 1  ; define a macro, taking one parameter
-  [GLOBAL isr%1]        ; %1 accesses the first parameter.
-  isr%1:
-    ;cli
-    push byte 0
-    push byte %1
-    jmp isr_common_stub
+; 因为有的中断处理函数会自动压入错误号，而有的不会，这样给我们的清栈造成了麻烦。
+; 所以我们在不会压入错误号的中断的处理函数里手动压入0作为占位，这样方便我们在清理的时候不用分类处理。
+; 定义两个构造中断处理函数的宏(有的中断有错误代码，有的没有)
+; 用于没有错误代码的中断
+%macro ISR_NOERRCODE 1      ; define a macro, taking one parameter
+    [GLOBAL isr%1]          ; %1 accesses the first parameter.
+    isr%1:
+        cli                 ; 首先关闭中断
+        push byte 0         ; push 无效的中断错误代码
+        push byte %1        ; push 中断号
+        jmp isr_common_stub
 %endmacro
 
+; 用于有错误代码的中断
 %macro ISR_ERRCODE 1
-  [GLOBAL isr%1]
-  isr%1:
-    ;cli
-    push byte %1
-    jmp isr_common_stub
+    [GLOBAL isr%1]
+    isr%1:
+        cli
+        push byte %1
+        jmp isr_common_stub
 %endmacro
 
-; 使用宏
-;ISR_NOERRCODE 0
+; 构造中断请求的宏
+%macro IRQ 2
+    [GLOBAL irq%1]
+    irq%1:
+        cli
+        push byte 0
+        push byte %2
+        jmp irq_common_stub
+%endmacro
 
-; We don't get information about which interrupt was caller
-; when the handler is run, so we will need to have a different handler
-; for every interrupt.
-; Furthermore, some interrupts push an error code onto the stack but others
-; don't, so we will push a dummy error code for those which don't, so that
-; we have a consistent stack for all of them.
+; 定义中断处理函数
+ISR_NOERRCODE  0    ; 0 #DE 除 0 异常
+ISR_NOERRCODE  1    ; 1 #DB 调试异常
+ISR_NOERRCODE  2    ; 2 NMI
+ISR_NOERRCODE  3    ; 3 BP 断点异常
+ISR_NOERRCODE  4    ; 4 #OF 溢出
+ISR_NOERRCODE  5    ; 5 #BR 对数组的引用超出边界
+ISR_NOERRCODE  6    ; 6 #UD 无效或未定义的操作码
+ISR_NOERRCODE  7    ; 7 #NM 设备不可用(无数学协处理器)
+ISR_ERRCODE    8    ; 8 #DF 双重故障(有错误代码)
+ISR_NOERRCODE  9    ; 9 协处理器跨段操作
+ISR_ERRCODE   10    ; 10 #TS 无效TSS(有错误代码)
+ISR_ERRCODE   11    ; 11 #NP 段不存在(有错误代码)
+ISR_ERRCODE   12    ; 12 #SS 栈错误(有错误代码)
+ISR_ERRCODE   13    ; 13 #GP 常规保护(有错误代码)
+ISR_ERRCODE   14    ; 14 #PF 页故障(有错误代码)
+ISR_NOERRCODE 15    ; 15 CPU 保留
+ISR_NOERRCODE 16    ; 16 #MF 浮点处理单元错误
+ISR_ERRCODE   17    ; 17 #AC 对齐检查
+ISR_NOERRCODE 18    ; 18 #MC 机器检查
+ISR_NOERRCODE 19    ; 19 #XM SIMD(单指令多数据)浮点异常
 
-; First make the ISRs global
-global isr0
-global isr1
-global isr2
-global isr3
-global isr4
-global isr5
-global isr6
-global isr7
-global isr8
-global isr9
-global isr10
-global isr11
-global isr12
-global isr13
-global isr14
-global isr15
-global isr16
-global isr17
-global isr18
-global isr19
-global isr20
-global isr21
-global isr22
-global isr23
-global isr24
-global isr25
-global isr26
-global isr27
-global isr28
-global isr29
-global isr30
-global isr31
+; 20 ~ 31 Intel 保留
+ISR_NOERRCODE 20
+ISR_NOERRCODE 21
+ISR_NOERRCODE 22
+ISR_NOERRCODE 23
+ISR_NOERRCODE 24
+ISR_NOERRCODE 25
+ISR_NOERRCODE 26
+ISR_NOERRCODE 27
+ISR_NOERRCODE 28
+ISR_NOERRCODE 29
+ISR_NOERRCODE 30
+ISR_NOERRCODE 31
 
-;IRQs
-global irq0
-global irq1
-global irq2
-global irq3
-global irq4
-global irq5
-global irq6
-global irq7
-global irq8
-global irq9
-global irq10
-global irq11
-global irq12
-global irq13
-global irq14
-global irq15
-
-; 0: Divide By Zero Exception
-isr0:
-    ;cli
-    push byte 0
-    push byte 0
-    jmp isr_common_stub
-
-; 1: Debug Exception
-isr1:
-    ;cli
-    push byte 0
-    push byte 1
-    jmp isr_common_stub
-
-; 2: Non Maskable Interrupt Exception
-isr2:
-    ;cli
-    push byte 0
-    push byte 2
-    jmp isr_common_stub
-
-; 3: Int 3 Exception
-isr3:
-    ;cli
-    push byte 0
-    push byte 3
-    jmp isr_common_stub
-
-; 4: INTO Exception
-isr4:
-    ;cli
-    push byte 0
-    push byte 4
-    jmp isr_common_stub
-
-; 5: Out of Bounds Exception
-isr5:
-    ;cli
-    push byte 0
-    push byte 5
-    jmp isr_common_stub
-
-; 6: Invalid Opcode Exception
-isr6:
-    ;cli
-    push byte 0
-    push byte 6
-    jmp isr_common_stub
-
-; 7: Coprocessor Not Available Exception
-isr7:
-    ;cli
-    push byte 0
-    push byte 7
-    jmp isr_common_stub
-
-; 8: Double Fault Exception (With Error Code!)
-isr8:
-    ;cli
-    push byte 8
-    jmp isr_common_stub
-
-; 9: Coprocessor Segment Overrun Exception
-isr9:
-    ;cli
-    push byte 0
-    push byte 9
-    jmp isr_common_stub
-
-; 10: Bad TSS Exception (With Error Code!)
-isr10:
-    ;cli
-    push byte 10
-    jmp isr_common_stub
-
-; 11: Segment Not Present Exception (With Error Code!)
-isr11:
-    ;cli
-    push byte 11
-    jmp isr_common_stub
-
-; 12: Stack Fault Exception (With Error Code!)
-isr12:
-    ;cli
-    push byte 12
-    jmp isr_common_stub
-
-; 13: General Protection Fault Exception (With Error Code!)
-isr13:
-    ;cli
-    push byte 13
-    jmp isr_common_stub
-
-; 14: Page Fault Exception (With Error Code!)
-isr14:
-    ;cli
-    push byte 14
-    jmp isr_common_stub
-
-; 15: Reserved Exception
-isr15:
-    ;cli
-    push byte 0
-    push byte 15
-    jmp isr_common_stub
-
-; 16: Floating Point Exception
-isr16:
-    ;cli
-    push byte 0
-    push byte 16
-    jmp isr_common_stub
-
-; 17: Alignment Check Exception
-isr17:
-    ;cli
-    push byte 0
-    push byte 17
-    jmp isr_common_stub
-
-; 18: Machine Check Exception
-isr18:
-    ;cli
-    push byte 0
-    push byte 18
-    jmp isr_common_stub
-
-; 19: Reserved
-isr19:
-    ;cli
-    push byte 0
-    push byte 19
-    jmp isr_common_stub
-
-; 20: Reserved
-isr20:
-    ;cli
-    push byte 0
-    push byte 20
-    jmp isr_common_stub
-
-; 21: Reserved
-isr21:
-    ;cli
-    push byte 0
-    push byte 21
-    jmp isr_common_stub
-
-; 22: Reserved
-isr22:
-    ;cli
-    push byte 0
-    push byte 22
-    jmp isr_common_stub
-
-; 23: Reserved
-isr23:
-    ;cli
-    push byte 0
-    push byte 23
-    jmp isr_common_stub
-
-; 24: Reserved
-isr24:
-    ;cli
-    push byte 0
-    push byte 24
-    jmp isr_common_stub
-
-; 25: Reserved
-isr25:
-    ;cli
-    push byte 0
-    push byte 25
-    jmp isr_common_stub
-
-; 26: Reserved
-isr26:
-    ;cli
-    push byte 0
-    push byte 26
-    jmp isr_common_stub
-
-; 27: Reserved
-isr27:
-    ;cli
-    push byte 0
-    push byte 27
-    jmp isr_common_stub
-
-; 28: Reserved
-isr28:
-    ;cli
-    push byte 0
-    push byte 28
-    jmp isr_common_stub
-
-; 29: Reserved
-isr29:
-    ;cli
-    push byte 0
-    push byte 29
-    jmp isr_common_stub
-
-; 30: Reserved
-isr30:
-    ;cli
-    push byte 0
-    push byte 30
-    jmp isr_common_stub
-
-; 31: Reserved
-isr31:
-    ;cli
-    push byte 0
-    push byte 31
-    jmp isr_common_stub
-
-; IRQ handlers
-irq0:
-	;cli
-	push byte 0
-	push byte 32
-	jmp irq_common_stub
-
-irq1:
-	;cli
-	push byte 1
-	push byte 33
-	jmp irq_common_stub
-
-irq2:
-	;cli
-	push byte 2
-	push byte 34
-	jmp irq_common_stub
-
-irq3:
-	;cli
-	push byte 3
-	push byte 35
-	jmp irq_common_stub
-
-irq4:
-	;cli
-	push byte 4
-	push byte 36
-	jmp irq_common_stub
-
-irq5:
-	;cli
-	push byte 5
-	push byte 37
-	jmp irq_common_stub
-
-irq6:
-	;cli
-	push byte 6
-	push byte 38
-	jmp irq_common_stub
-
-irq7:
-	;cli
-	push byte 7
-	push byte 39
-	jmp irq_common_stub
-
-irq8:
-	;cli
-	push byte 8
-	push byte 40
-	jmp irq_common_stub
-
-irq9:
-	;cli
-	push byte 9
-	push byte 41
-	jmp irq_common_stub
-
-irq10:
-	;cli
-	push byte 10
-	push byte 42
-	jmp irq_common_stub
-
-irq11:
-	;cli
-	push byte 11
-	push byte 43
-	jmp irq_common_stub
-
-irq12:
-	;cli
-	push byte 12
-	push byte 44
-	jmp irq_common_stub
-
-irq13:
-	;cli
-	push byte 13
-	push byte 45
-	jmp irq_common_stub
-
-irq14:
-	;cli
-	push byte 14
-	push byte 46
-	jmp irq_common_stub
-
-irq15:
-	;cli
-	push byte 15
-	push byte 47
-	jmp irq_common_stub
+; 定义
+IRQ   0,    32  ; 电脑系统计时器
+IRQ   1,    33  ; 键盘
+IRQ   2,    34  ; 与 IRQ9 相接，MPU-401 MD 使用
+IRQ   3,    35  ; 串口设备
+IRQ   4,    36  ; 串口设备
+IRQ   5,    37  ; 建议声卡使用
+IRQ   6,    38  ; 软驱传输控制使用
+IRQ   7,    39  ; 打印机传输控制使用
+IRQ   8,    40  ; 即时时钟
+IRQ   9,    41  ; 与 IRQ2 相接，可设定给其他硬件
+IRQ  10,    42  ; 建议网卡使用
+IRQ  11,    43  ; 建议 AGP 显卡使用
+IRQ  12,    44  ; 接 PS/2 鼠标，也可设定给其他硬件
+IRQ  13,    45  ; 协处理器使用
+IRQ  14,    46  ; IDE0 传输控制使用
+IRQ  15,    47  ; IDE1 传输控制使用

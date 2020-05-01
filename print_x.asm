@@ -8,7 +8,7 @@ int 0x10
 
 mov bx, the_secret
 add bx, 0x7c00
-mov al, [bx]  
+mov al, [bx]
 
 int 0x10
 

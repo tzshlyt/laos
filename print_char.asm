@@ -1,3 +1,5 @@
+; 打印字符串实验
+
 mov ah, 0x0e
 
 mov al, 'H'

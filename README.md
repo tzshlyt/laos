@@ -60,3 +60,17 @@
 5. TCP []
 6. HTTP []
 
+##### 如何运行
+
+```shell
+gcc -ffreestanding -c kernel.c -o kernel.o
+ld -o kernel.bin -Ttext 0x1000 kernel.o --oformat binary
+nasm boot_sect.asm -f bin -o boot_sect.bin
+cat boot_sect.bin kernel.bin > os-image.bin
+qemu-system-i386 -fda os-image.bin
+
+或者
+make clean
+make run
+```
+

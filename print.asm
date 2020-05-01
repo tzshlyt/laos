@@ -1,19 +1,19 @@
 
 print_string:
 	pusha
-	
+
 start:
-	mov al, [bx]	
+	mov al, [bx]
 	cmp al, 0
 	je end
 
 	mov ah, 0x0e
 	int 0x10
-	
+
 	add bx, 1
 
 	jmp start
-	
+
 end:
 	popa
 	ret
@@ -21,10 +21,10 @@ end:
 print_ln:
 	pusha
 	mov ah, 0x0e
-    	mov al, 0x0a ; newline char
-    	int 0x10
-    	mov al, 0x0d ; carriage return
-    	int 0x10
+	mov al, 0x0a ; newline char
+	int 0x10
+	mov al, 0x0d ; carriage return
+	int 0x10
 	popa
 	ret
 
@@ -42,13 +42,13 @@ hex_loop:
 	cmp al, 0x39
 	jle setp2
 	add al, 7
-	
+
 setp2:
 	mov bx, HEX_OUT + 5
-	sub bx, cx 
+	sub bx, cx
 	mov [bx], al
 	ror dx, 4
-	
+
 	add cx, 1
 	jmp hex_loop
 
@@ -57,7 +57,7 @@ end1:
 	call print_string
 
 	popa
-	ret 
+	ret
 
 HEX_OUT:
 	db '0x0000', 0

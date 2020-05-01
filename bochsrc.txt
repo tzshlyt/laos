@@ -17,7 +17,7 @@ log: bochsout.txt
 mouse: enabled=0
 
 # 打开键盘
-keyboard: type=mf, serial_delay=250
+#keyboard: type=mf, serial_delay=250
 
 # 设置硬盘
 ata0: enabled=1, ioaddr1=0x1f0, ioaddr2=0x3f0, irq=14

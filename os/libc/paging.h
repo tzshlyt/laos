@@ -8,7 +8,7 @@ typedef struct page {
     uint32_t present    : 1;    // Page present in memory
     uint32_t rw         : 1;    // Read-only if clear, readwrite if set
     uint32_t user       : 1;    // Supervisor level only if clear
-    uint32_t accessed   : 1;    // Supervisor level only if clear
+    uint32_t accessed   : 1;    // Set if the page has been accessed (Gets set by the CPU).
     uint32_t dirty      : 1;    // Has the page been written to since last refresh?
     uint32_t unused     : 7;    // Amalgamation of unused and reserved bits
     uint32_t frame      : 20;   // Frame address (shifted right 12 bits)
@@ -29,7 +29,7 @@ typedef struct page_directory {
       location, for loading into the CR3 register.
     **/
     uint32_t tablesPhysical[1024];
-   
+
     /**
       The physical address of tablesPhysical. This comes into play
       when we get our kernel heap allocated and the directory

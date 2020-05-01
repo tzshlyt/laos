@@ -1,3 +1,4 @@
+; 打印 hex
 
 [org 0x7c00]
 
@@ -40,13 +41,13 @@ hex_loop:
 	cmp al, 0x39
 	jle setp2
 	add al, 7
-	
+
 setp2:
 	mov bx, HEX_OUT + 5
-	sub bx, cx 
+	sub bx, cx
 	mov [bx], al
 	ror dx, 4
-	
+
 	add cx, 1
 	jmp hex_loop
 
@@ -55,7 +56,7 @@ end1:
 	call print_string
 
 	popa
-	ret 
+	ret
 
 
 times 510-($-$$) db 0

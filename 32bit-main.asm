@@ -8,7 +8,7 @@ call print_string
 
 call switch_to_pm	;没有返回
 
-jmp $  			;永远不会执行
+jmp $  				;永远不会执行
 
 %include "print.asm"
 %include "gdt.asm"
